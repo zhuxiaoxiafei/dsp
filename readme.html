@@ -1,0 +1,229 @@
+
+<html>
+	<head>
+		<title>readme</title>
+		<style type="text/css">
+			body { padding:20px;font:14px Arial, Helvetica, Verdana; }
+			pre { border:1px solid gray;padding:10px;background-color:#f0f0f0; }
+			td { padding:5px; }
+			td.heading { background-color:#f0f0f0;border:1px solid #d0d0d0; padding:5px;}
+			h1 { color:#003366; width:100%; border-bottom:1px solid #003366; margin-top:40px; margin-bottom:40px }
+			h2 { color:#000000; border:0px; }
+			li { padding:3px; }
+			#header { background-color:#003366; width:100% }
+		</style>
+	</head>
+	<body>
+	
+		<div id="header">&nbsp;</div>
+
+		<h1>ADSP-21489 EZ-Board Power-On Self-Test (POST)</h1>
+
+		<p>
+		<ol>
+			<li><a href="#OV">Overview </a></li>
+			<li><a href="#SC">Software configuration </a></li>
+			<li><a href="#HC">Hardware requirements and setup </a></li>
+			<li><a href="#RE">Running the example</a></li>
+			<li><a href="#LF">Using Loader Files</a></li>
+		</ol>
+		</p>
+
+		<h1>1. <a name="OV">Overview </a></h1>
+
+			<p>
+				This example allows the user to test the many peripherals of the EZ-Board.  This example is also pre-programmed into the on-board flash
+				memory.  By following the directions below you can also program this example (or one of your own) into the EZ-Board flash.
+				This POST was designed so that you can use the EZ-Board push buttons to select a specific test to run.
+			</p>
+
+			
+		<h1>2. <a name="SC"> Software configuration </a></h1>
+		
+		There are a couple ways that you can configure this example through software.
+		
+		<ul>
+		 <li><b> Board revision      </b>      : <em> _21489_EZBOARD_REV_X_Y_</em> is the format used where X is the major rev and Y is the minor
+												rev.  This is defined in the Project Properties dialog which can be accessed by going to 
+												the "Project" menu and choosing "Properties", then "C/C++ Build", then "Settings",
+												then "Tool Settings" tab, then "CrossCore SHARC C/C++ Compiler", then "Preprocessor".  There you
+												will find the "Preprocessor definitions".</li>
+		 <li><b> Debug output method </b>      : In file <em>post_debug.h</em> you can choose between file, UART, or console window output methods.
+											UART is the default.  If you want to use the UART method, place a serial cable between the J2
+											connector and a COM port on your PC.  In order to receive debug information you must run a terminal
+											application on the PC with these settings:
+											<b>19200 baud, 8 data bits, odd parity, 2 stop bits, no flow control</b></li>
+		 </ul>
+					
+
+					
+		<h1>3. <a name="HC">Hardware Requirements and Setup </a></h1>
+
+			<h2>3.1 Supported platforms </h2>
+				
+				<ol>
+					<li>ADSP-21489 EZ-Board rev 0.1 or higher </li>
+				</ol>
+
+			<h2>3.2 Hardware Setup </h2>
+
+			The following switch and jumper settings should be used for this example.  Some tests require changes to be made and those will be pointed
+			out in the test specific sections.  If not specified, these default settings should be used.<br>
+			
+					<table border="1">
+						<tr>
+							<td class="heading" colspan="9"><b>ADSP-21489 EZ-Board rev 0.1</b></td>
+						</tr>
+						<tr><th><b>Switches</b></th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th></tr>
+						<tr><td>SW1</td><td>ON</td><td>ON</td><td>ON</td><td>ON</td><td>ON</td><td>ON</td><td>ON</td><td>ON</td></tr>
+						<tr><td>SW2</td><td>ON</td><td>ON</td><td>ON</td><td>ON</td><td>OFF</td><td>OFF</td><td>ON</td><td>ON</td></tr>
+						<tr><td>SW3</td><td>ON</td><td>ON</td><td>ON</td><td>ON</td><td>ON</td><td>ON</td><td>ON</td><td>ON</td></tr>
+						<tr><td>SW4</td><td>2</td></tr>
+						<tr><td>SW5</td><td>OFF</td><td>ON</td></tr>
+						<tr><td>SW7</td><td>ON</td><td>ON</td><td>ON</td><td>ON</td></tr>
+						<tr><td>SW13</td><td>ON</td><td>ON</td><td>OFF</td><td>ON</td><td>ON</td><td>OFF</td><td>ON</td><td>OFF</td></tr>
+						<tr><td>SW14</td><td>ON</td><td>ON</td><td>OFF</td><td>OFF</td><td>ON</td><td>ON</td></tr>
+						<tr><td>SW15</td><td>ON</td><td>OFF</td><td>ON</td><td>OFF</td><td>ON</td><td>OFF</td></tr>
+						<tr><td>SW16</td><td>ON</td><td>OFF</td><td>ON</td><td>OFF</td><td>ON</td><td>OFF</td></tr>
+						<tr><td>SW17</td><td>ON</td><td>OFF</td><td>ON</td><td>OFF</td><td>ON</td><td>OFF</td></tr>
+						<tr><td>SW18</td><td>ON</td><td>OFF</td><td>ON</td><td>OFF</td><td>ON</td><td>OFF</td></tr>
+						<tr><td>SW19</td><td>ON</td><td>OFF</td><td>ON</td><td>OFF</td><td>ON</td><td>OFF</td><td>ON</td><td>OFF</td></tr>
+						<tr><td>SW20</td><td>ON</td><td>OFF</td></tr>
+						<tr><td>SW21</td><td>ON</td><td>OFF</td></tr>
+						<tr><td>SW22</td><td>OFF</td><td>OFF</td></tr>
+						<tr><td>SW23</td><td>ON</td><td>ON</td></tr>
+						<tr><td>SW24</td><td>ON</td><td>ON</td><td>ON</td><td>ON</td></tr>
+						<tr><td>SW25</td><td>ON</td><td>ON</td><td>ON</td><td>ON</td></tr>
+						<tr><th><b>Jumpers</b></th><th>1-2</th></tr>
+						<tr><td>JP1</td><td>OFF</td></tr>
+						<tr><td>JP2</td><td>ON</td></tr>
+						<tr><td>JP3</td><td>ON</td></tr>
+						<tr><td>JP4</td><td>ON</td></tr>
+						<tr><td>JP5</td><td>OFF</td></tr>
+						<tr><td>P14</td><td>ON</td></tr>
+						<tr><td>P15</td><td>ON</td></tr>
+					</table>
+
+					
+		<h1>4.<a name="RE"> Running the example</a></h1>
+		
+			<h2>4.1 Getting Started </h2>
+			
+			<ol>
+				<li>Be sure you have read both the EZ-Board Evaluation System manual and <a href="#HC">Hardware Requirements and Setup</a>
+				section of this file and followed their instructions.</li>
+				<li>Connect to your target board with CrossCore Embedded Studio (CCES). If you need help refer to the CCES documentation.</li>
+				<li>Use the Example Browser to open this example project and build it.  If you need help refer to the CCES documentation.</li>
+				<li>Create and launch a debug configuration which loads the executable.   If you need help refer to the CCES documentation.</li>
+				<li>Now run the executable by choosing the "Run" and then "Resume" menu items or by pressing the F5 key.</li>
+			</ol>
+		
+			<h2>4.2 Selecting Tests </h2>
+			
+			This POST uses a pushbutton sequence to select individual tests.  It requires the
+			user to enter a <b>5 button sequence</b> to choose a test.  In the rest of this document
+			pressing a <b>0 refers to SW10</b>, and pressing a <b>1 refers to SW11</b>.
+			<BR><BR>
+			Note that this POST allows the user to run multiple tests without resetting the
+			board.  After a test runs successfully, it will return to the standard blinking
+			pattern.  At this time the user may choose to run another test.  If the user 
+			wants to run a single test continuously then they can enter the LOOP_FLAG 
+			sequence (1-1-1-1-1), then when the standard blinking pattern returns you may 
+			enter the test that you want to loop on.
+			<BR><BR>
+			Please refer to the <b>table in main.c</b> for all the pushbutton sequences and the
+			corresponding LED status.  All references to LED status will be in the order of
+			LED5:1.
+
+			<h2>4.3 Individual Test Notes</h2>
+			
+			<b>Standard Loop Tests</b>
+			<ul>
+			<li>Press 0-0-0-0-0 when the standard pattern is blinking to enter the standard loop.</li>
+			<li>The first test is processor version.</li>
+			<li>The next test is pushbuttons and LEDs (PBLED).  Press and release 
+				SW8 and SW9 one at a time.  You should see the LEDs toggling with each press.</li>
+			<li>At this point the tests will continue without requiring user input.  When 
+				the last test is reached it will loop back to this point so that tests will 
+				continue to run without any further user input.</li>
+			<li>If a test fails, POST will stop at that point and blink the LED pattern for 
+				the failing test.  Refer to the table in main.c for LED patterns.</li>
+			<li>Note that each test that is part of this loop can also be run individually by
+				entering the proper pushbutton sequence when the standard pattern is blinking.</li>
+			</ul>
+				
+			<b>Display Firmware Version</b>
+			<ul>
+			<li>Refer to main.c for the pushbutton sequence for this test and enter it when
+				the standard pattern is blinking.</li>
+			<li>You will see the test pattern quickly blink, then LED1 will blink the major
+				rev and LED2 will blink the minor rev.  For example, if LED1 blinks once and
+				LED2 blinks twice, the firmware version is 1.2.</li>
+			</ul>	
+				
+			<b>Analog Audio Test - RCA</b>
+			<ul>
+			<li>Change switches SW15, SW16, SW17, and SW18 to ON, OFF, ON, OFF, ON, OFF.</li>
+			<li>Change switches SW24 and SW25 to ON, ON, ON, ON.</li>
+			<li>Refer to main.c for the pushbutton sequence for this test and enter it when the standard pattern is blinking.</li>
+			</ul>
+			
+			<b>Analog Audio Test - Headphone</b>
+			<ul>
+			<li>When Analog Audio Test is running, insert a headphone to J8.</li>
+			<li>Change SW23 to ON, ON.</li>
+			<li>Sinewave tone should be heard.</li>
+			<li>Turn HP VOL switch clockwise or anti clockwise, the volume of sound should be changeable.</li>
+			</ul>
+			
+			<b>Analog Audio Test - Differential</b>
+			<ul>
+			<li>Change switches SW15, SW16, SW17, and SW18 to OFF, ON, OFF, ON, OFF, ON.</li>
+			<li>Change switches SW24 and SW25 to OFF, OFF, OFF, OFF.</li>
+			<li>Connect loopback cable to DIFF IN and OUT on 21489 board.</li>
+			<li>Refer to main.c for the pushbutton sequence for this test and enter it when the standard pattern is blinking.</li>
+			</ul>	
+			
+		 <h1>5.<a name="LF"> Using Loader Files</a></h1>
+		 
+			POST ships already programmed into the parallel flash.  If you wish to make changes to POST
+			or create your own application to program into flash you may do so as well.  Parallel flash
+			and serial flash drivers are provided for this EZ-Board to allow you to use the CrossCore
+			Embedded Studio Device Programmer utility to program each flash.  Refer to the device programmer 
+			help for more information.
+			<BR><BR>
+			The basic steps to this process would be the following:
+			
+			<ol>
+				<li><b>Create a loader (.LDR) file that can be programmed into a flash device.</b></li>
+				<ul>
+					<li>Assuming your project is already loaded into CCES, go to the "Project" menu and choose "Properties", then "C/C++ Build",
+						then "Settings", then "Build Artifact" tab.</li>
+					<li>There you will see "Artifact Type".  From the dropdown menu select "Loader File".</li>
+					<li>Click on the "Tool Settings" tab and select "CrossCore SHARC Loader" then "General".</li>
+					<li>For "Boot mode" choose "SPI flash" for serial or "Prom" for parallel.</li>
+					<li>For "Boot format" choose "Intel hex".</li>
+					<li>For "Output width" choose "8-bits".</li>
+					<li>"Prom start address" should be blank.</li>
+					<li>"No kernel" should be unchecked.</li>
+					<li>"Use default kernel" should be checked.</li>
+					<li>Click "OK".</li>
+					<li>Rebuild the project to generate the LDR file.</li>
+				</ul>
+				<li><b>Download the LDR file into flash using the Command Line Device Programmer (CLDP) application.</b></li>
+				<ul>
+					<li>Please refer to the CLDP help for more information.</li>
+					<li>Note, there are many options when using the CLDP (including defining your connection type, driver file, loader file, etc.
+					Here is a sample command line to program the POST loader file to the parallel flash on the EZ-Board using an HPUSB-ICE emulator:</li>
+					<BR>
+					<em>cldp -proc ADSP-21489 -emu hpusb -driver "C:\21489_EZ-Board\Examples\Device_Programmer\parallel\21489_m29w320_dpia.dxe" -cmd prog -erase affected -format hex -file "C:\21489_EZ-Board\Examples\Power_On_Self_Test\Debug\21489_post.ldr"</em>
+					<BR>
+				</ul>
+				<li><b>Boot your newly programmed example.</b></li>
+				<ul>
+					<li>Set SW4 to 1 for serial, 2 for parallel then press the reset button or cycle power to the board.</li>
+				</ul>
+			</ol>    
+	</body>
+</html>
+
